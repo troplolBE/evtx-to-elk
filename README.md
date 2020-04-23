@@ -6,3 +6,5 @@ To install and use the program you need to download the repo and open it with Vi
 
 ## Usage
 The executable is very simple to use and has a ver symple UI. The executable also checks for all the inputs in order to make sure that you can't crash it.
+
+![Script](https://i.imgur.com/Hehlr4B.png)
