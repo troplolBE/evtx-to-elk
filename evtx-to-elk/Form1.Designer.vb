@@ -95,7 +95,7 @@ Partial Class Form1
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(85, 23)
         Me.Button3.TabIndex = 8
-        Me.Button3.Text = "Choose folder"
+        Me.Button3.Text = "Choose file"
         Me.Button3.UseVisualStyleBackColor = True
         '
         'TextBox3

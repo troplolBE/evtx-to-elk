@@ -45,8 +45,17 @@
             lblStatus.Text = "Sending logfile " & file.Split("\").Last
             lblStatus.Update()
             ProgressBar1.Increment(i)
-            Shell(TextBox1.Text & "\winlogbeat.exe -e -c " & TextBox3.Text & " -E EVTX_FILE=" & file,
-                  AppWinStyle.NormalFocus, True)
+            Dim info As New ProcessStartInfo
+            info.FileName = TextBox1.Text & "\winlogbeat.exe"
+            info.Arguments = "-e -c " & TextBox3.Text & " -E EVTX_FILE=""" & file & """ "
+            info.WindowStyle = ProcessWindowStyle.Normal
+            info.UseShellExecute = True
+            MsgBox(info.Arguments)
+            info.ErrorDialog = True
+            Process.Start(info)
         Next
+        lblStatus.Text = "Done uploading, all went well..."
+        lblStatus.Update()
+        MsgBox("Import finished", MsgBoxStyle.Information)
     End Sub
 End Class
