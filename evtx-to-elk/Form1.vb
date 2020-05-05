@@ -70,6 +70,6 @@
         Next
         lblStatus.Text = "Done uploading, everything went well..."
         lblStatus.Update()
-        MsgBox("Import finished", MsgBoxStyle.Information)
+        MsgBox("Import done !", MsgBoxStyle.Information)
     End Sub
 End Class
