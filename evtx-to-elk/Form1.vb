@@ -31,6 +31,18 @@
         End If
     End Sub
 
+    Private Sub StartProcess(ByVal info As ProcessStartInfo)
+        Dim proc As New Process
+        Try
+            proc.StartInfo = info
+            proc.Start()
+            proc.WaitForExit()
+            proc.Close()
+        Catch ex As Exception
+            MsgBox("Error while starting winlogbea: " & ex.Message)
+        End Try
+    End Sub
+
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
         ProgressBar1.Value = 0
         lblStatus.Text = "Checking inputs..."
@@ -41,6 +53,9 @@
         End If
         Dim Logs() As String = IO.Directory.GetFiles(TextBox2.Text)
         Dim i As Integer = If(Logs.Length > 0, 1000 / Logs.Length, 1000)
+        lblStatus.Text = "Deleting registry file..."
+        lblStatus.Update()
+        My.Computer.FileSystem.DeleteFile(TextBox1.Text & "\data\evtx-registry.yml")
         For Each file In Logs
             lblStatus.Text = "Sending logfile " & file.Split("\").Last
             lblStatus.Update()
@@ -50,11 +65,10 @@
             info.Arguments = "-e -c " & TextBox3.Text & " -E EVTX_FILE=""" & file & """ "
             info.WindowStyle = ProcessWindowStyle.Normal
             info.UseShellExecute = True
-            MsgBox(info.Arguments)
             info.ErrorDialog = True
-            Process.Start(info)
+            StartProcess(info)
         Next
-        lblStatus.Text = "Done uploading, all went well..."
+        lblStatus.Text = "Done uploading, everything went well..."
         lblStatus.Update()
         MsgBox("Import finished", MsgBoxStyle.Information)
     End Sub
