@@ -55,7 +55,10 @@
         Dim i As Integer = If(Logs.Length > 0, 1000 / Logs.Length, 1000)
         lblStatus.Text = "Deleting registry file..."
         lblStatus.Update()
-        My.Computer.FileSystem.DeleteFile(TextBox1.Text & "\data\evtx-registry.yml")
+        If My.Computer.FileSystem.FileExists(TextBox1.Text & "\data\evtx-registry.yml") Then
+            My.Computer.FileSystem.DeleteFile(TextBox1.Text & "\data\evtx-registry.yml")
+        End If
+        Return
         For Each file In Logs
             lblStatus.Text = "Sending logfile " & file.Split("\").Last
             lblStatus.Update()
