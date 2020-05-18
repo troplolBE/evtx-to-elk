@@ -51,14 +51,18 @@
             lblStatus.Text = "Input is wrong..."
             Return
         End If
-        Dim Logs() As String = IO.Directory.GetFiles(TextBox2.Text)
-        Dim i As Integer = If(Logs.Length > 0, 1000 / Logs.Length, 1000)
+        Dim Directories() As String = IO.Directory.GetDirectories(TextBox2.Text)
+        Dim Logs As New List(Of String)
+        For Each directory In Directories
+            Logs.AddRange(IO.Directory.GetFiles(directory))
+        Next
+        Logs.AddRange(IO.Directory.GetFiles(TextBox2.Text))
+        Dim i As Integer = If(Logs.Count > 0, 1000 / Logs.Count, 1000)
         lblStatus.Text = "Deleting registry file..."
         lblStatus.Update()
         If My.Computer.FileSystem.FileExists(TextBox1.Text & "\data\evtx-registry.yml") Then
             My.Computer.FileSystem.DeleteFile(TextBox1.Text & "\data\evtx-registry.yml")
         End If
-        Return
         For Each file In Logs
             lblStatus.Text = "Sending logfile " & file.Split("\").Last
             lblStatus.Update()

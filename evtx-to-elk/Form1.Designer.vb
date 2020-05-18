@@ -148,6 +148,7 @@ Partial Class Form1
         'FolderBrowserDialog2
         '
         Me.FolderBrowserDialog2.Description = "Select file containing all the logs you want to import"
+        Me.FolderBrowserDialog2.RootFolder = System.Environment.SpecialFolder.MyComputer
         '
         'OpenFileDialog1
         '
